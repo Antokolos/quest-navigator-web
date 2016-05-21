@@ -153,7 +153,7 @@ void qspCallShowMessage(QSP_CHAR *text)
 	}
 }
 
-void qspCallShowMenu()
+int qspCallShowMenu()
 {
 	/* Здесь показываем меню */
 	QSPCallState state;
@@ -163,6 +163,7 @@ void qspCallShowMenu()
 		qspCallBacks[QSP_CALL_SHOWMENU]();
 		qspRestoreCallState(&state);
 	}
+	return 0;
 }
 
 void qspCallShowPicture(QSP_CHAR *file)

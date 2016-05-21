@@ -15,6 +15,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
+#ifndef QSP_DEFINES
+	#define QSP_DEFINES
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -40,8 +42,6 @@
 #include "qsp.h"
 #include "onig/oniguruma.h"
 
-#ifndef QSP_DEFINES
-	#define QSP_DEFINES
 
 	static int qspEndiannessTestValue = 1;
 

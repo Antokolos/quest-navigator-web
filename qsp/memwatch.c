@@ -410,6 +410,9 @@ static void		mwMutexUnlock( void );
 ** System functions
 ***********************************************************************/
 
+extern int time(int *tp);
+extern int ctime(int *tp);
+
 void mwInit( void ) {
     time_t tid;
 

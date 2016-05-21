@@ -15,10 +15,11 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "declarations.h"
-
 #ifndef QSP_TIMEDEFINES
 	#define QSP_TIMEDEFINES
+
+#include "declarations.h"
+
 
 	extern int qspMSCount;
 

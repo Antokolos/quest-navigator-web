@@ -30,6 +30,7 @@
 #include "time.h"
 #include "variables.h"
 
+
 QSP_CHAR *qspQstPath = 0;
 int qspQstPathLen = 0;
 QSP_CHAR *qspQstFullPath = 0;
@@ -149,6 +150,7 @@ static void qspOpenIncludes()
 	}
 }
 
+extern int time(int *tp);
 void qspNewGame(QSP_BOOL isReset)
 {
 	if (!qspLocsCount)

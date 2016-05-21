@@ -15,13 +15,14 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
+#ifndef QSP_LOCSDEFINES
+	#define QSP_LOCSDEFINES
+
 #include "declarations.h"
 #include "actions.h"
 #include "codetools.h"
 #include "variant.h"
 
-#ifndef QSP_LOCSDEFINES
-	#define QSP_LOCSDEFINES
 
 	typedef struct
 	{

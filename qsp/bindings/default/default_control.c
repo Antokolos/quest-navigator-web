@@ -467,6 +467,8 @@ QSP_BOOL QSPRestartGame(QSP_BOOL isRefresh)
 	if (isRefresh) qspCallRefreshInt(QSP_FALSE);
 	return QSP_TRUE;
 }
+extern int qspCurMenuItems;
+extern QSP_CHAR *qspCurMenuLocs;
 /* ------------------------------------------------------------ */
 /* Меню */
 /* Ф-я предназначена только для вызова из CallBack'а QSP_CALL_SHOWMENU */
