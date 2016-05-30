@@ -13,17 +13,19 @@
 	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
 	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
 	-->
+<script type="text/javascript" src="qsp.js"></script>
 <script type="text/javascript" src="js/core.js"></script>
-<script type="text/javascript" src="js/corePG.js"></script>
-<script type="text/javascript" src="js/QspLibPG.js"></script>
+<script type="text/javascript" src="js/coreEM.js"></script>
+<script type="text/javascript" src="js/QspLibEM.js"></script>
 <script type="text/javascript" src="js/api.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	initApi();
+//	initApi();
     });
 </script>
 </head>
 <body>
+<a href="#" onclick="alert(qspGetVersion());">Get QSP Library version</a>
 
 <div id="qsp-back-image"></div>
  

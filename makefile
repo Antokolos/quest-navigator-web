@@ -68,7 +68,7 @@ ODIR5 = obj/onig/enc
 #LIBS = -lm
 LIBS =
 
-_DEPS1 = actions.h codetools.h common.h errors.h locations.h memwatch.h objects.h qsp.h text.h variables.h callbacks.h coding.h declarations.h game.h mathops.h menu.h playlist.h statements.h time.h variant.h
+_DEPS1 = ConvertUTF.h actions.h codetools.h common.h errors.h locations.h memwatch.h objects.h qsp.h text.h variables.h callbacks.h coding.h declarations.h game.h mathops.h menu.h playlist.h statements.h time.h variant.h
 DEPS1 = $(patsubst %,$(IDIR1)/%,$(_DEPS1))
 
 _DEPS2 = config.h oniguruma.h regenc.h regint.h regparse.h st.h
@@ -80,7 +80,7 @@ DEPS3 = $(patsubst %,$(IDIR3)/%,$(_DEPS3))
 _DEPS4 = qsp_default.h
 DEPS4 = $(patsubst %,$(IDIR4)/%,$(_DEPS4))
 
-_OBJ1 = actions.o codetools.o common.o game.o mathops.o menu.o playlist.o text.o towlower.o variables.o callbacks.o coding.o errors.o locations.o memwatch.o objects.o statements.o time.o towupper.o variant.o
+_OBJ1 = ConvertUTF.o actions.o codetools.o common.o game.o mathops.o menu.o playlist.o text.o towlower.o variables.o callbacks.o coding.o errors.o locations.o memwatch.o objects.o statements.o time.o towupper.o variant.o
 OBJ1 = $(patsubst %,$(ODIR1)/%,$(_OBJ1))
 
 _OBJ2 = regcomp.o regenc.o regerror.o regexec.o regparse.o regsyntax.o regtrav.o regversion.o st.o

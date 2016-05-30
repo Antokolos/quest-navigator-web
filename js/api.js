@@ -927,6 +927,11 @@ function qspInputStringEnter()
 	QspLib.runInputString();
 }
 
+function qspGetVersion()
+{
+    return QspLib.version();
+}
+
 function qspSelectGame()
 {
 	// Вызов диалога для открытия файла.
