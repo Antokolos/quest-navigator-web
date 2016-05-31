@@ -1,7 +1,7 @@
 IDIR1 = qsp
 IDIR2 = qsp/onig
 IDIR3 = qsp/bindings
-IDIR4 = qsp/bindings/default
+IDIR4 = qsp/bindings/emscripten
 IDIR5 = qsp/onig/enc
 #IDIR5 = qsp/bindings/android
 #IDIR6 = qsp/bindings/flash
@@ -13,6 +13,7 @@ QCFLAGS = -O2 -s EXPORTED_FUNCTIONS="[\
 '_QSPEnableDebugMode', \
 '_QSPGetCurStateData', \
 '_QSPGetVersion', \
+'_QSPGetVersionW', \
 '_QSPGetCompiledDateTime', \
 '_QSPGetFullRefreshCount', \
 '_QSPGetQstFullPath', \
