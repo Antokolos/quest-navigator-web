@@ -67,14 +67,11 @@ const QSP_CHAR *QSPGetVersion()
 const UTF8 *QSPGetVersionW()
 {
 	UTF16* version = (UTF16*) QSPGetVersion();
-	UTF16** versionsrc = malloc(2*sizeof(UTF16*));
-	versionsrc[0] = version;
-	versionsrc[1] = 0;
-	UTF8** versiontgt = malloc(2*sizeof(UTF8));
-	versiontgt[0] = malloc(500*sizeof(UTF8));
-	versiontgt[1] = 0;
-	ConvertUTF16toUTF8(versionsrc, versionsrc[1], versiontgt, versiontgt[1], lenientConversion);
-	return versiontgt[0];
+	UTF8* versiontgt = malloc(200*sizeof(UTF8));
+	UTF8* pend = &(versiontgt[4]);
+	ConversionResult cr = ConvertUTF16toUTF8(&version, &(version[4]), &versiontgt, pend, lenientConversion);
+	versiontgt[5] = 0;
+	return versiontgt;
 }
 /* Дата и время компиляции */
 const QSP_CHAR *QSPGetCompiledDateTime()

@@ -62,7 +62,7 @@ QCFLAGS = -O2 -s EXPORTED_FUNCTIONS="[\
 ODIR1 = obj
 ODIR2 = obj/onig
 ODIR3 = obj/bindings
-ODIR4 = obj/bindings/default
+ODIR4 = obj/bindings/emscripten
 ODIR5 = obj/onig/enc
 #LDIR = lib
 
@@ -78,7 +78,7 @@ DEPS2 = $(patsubst %,$(IDIR2)/%,$(_DEPS2))
 _DEPS3 = bindings_config.h
 DEPS3 = $(patsubst %,$(IDIR3)/%,$(_DEPS3))
 
-_DEPS4 = qsp_default.h
+_DEPS4 = qsp_emscripten.h
 DEPS4 = $(patsubst %,$(IDIR4)/%,$(_DEPS4))
 
 _OBJ1 = ConvertUTF.o actions.o codetools.o common.o game.o mathops.o menu.o playlist.o text.o towlower.o variables.o callbacks.o coding.o errors.o locations.o memwatch.o objects.o statements.o time.o towupper.o variant.o
@@ -90,7 +90,7 @@ OBJ2 = $(patsubst %,$(ODIR2)/%,$(_OBJ2))
 #_OBJ3 = hellomake.o hellofunc.o 
 #OBJ3 = $(patsubst %,$(ODIR3)/%,$(_OBJ3))
 
-_OBJ4 = default_callbacks.o default_coding.o default_control.o
+_OBJ4 = emscripten_callbacks.o emscripten_coding.o emscripten_control.o
 OBJ4 = $(patsubst %,$(ODIR4)/%,$(_OBJ4))
 
 _OBJ5 = ascii.o cp1251.o koi8_r.o unicode.o utf16_be.o utf16_le.o utf32_be.o utf32_le.o
