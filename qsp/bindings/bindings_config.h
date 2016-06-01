@@ -36,6 +36,12 @@
 		#include "android/android.h"
 	#endif
 
+	/* Emscripten binding */
+	#ifdef _EMSCRIPTEN
+		#define QSP_BINDING
+		#include "emscripten/emscripten.h"
+	#endif
+
 	/* Place your bindings here */
 
 	#ifndef QSP_BINDING

@@ -17,7 +17,7 @@
 
 #include "../../declarations.h"
 
-#ifdef _DEFAULT_BINDING
+#ifdef _EMSCRIPTEN
 
 #include "../../actions.h"
 #include "../../callbacks.h"
@@ -34,7 +34,6 @@
 #include "../../time.h"
 #include "../../variables.h"
 #include "../../variant.h"
-#include "../../ConvertUTF.h"
 
 /* ------------------------------------------------------------ */
 QSP_BOOL QSPIsInCallBack()
@@ -60,29 +59,14 @@ void QSPGetCurStateData(QSP_CHAR **loc, int *actIndex, int *line)
 /* Информация о версии */
 
 /* Версия */
-const QSP_CHAR *QSPGetVersion()
+
+const UTF8 *QSPGetVersion()
+{
+	return QSPCharToUTF8(QSPGetVersionImpl());
+}
+const QSP_CHAR *QSPGetVersionImpl()
 {
 	return QSP_VER;
-}
-const UTF8 *QSPGetVersionW()
-{
-	UTF16* version = (UTF16*) QSPGetVersion();
-	UTF8* versiontgt = malloc(200*sizeof(UTF8));
-	UTF8* result = versiontgt;
-	ConversionResult cr = ConvertUTF16toUTF8(&version, &(version[4]), &versiontgt, &(versiontgt[4]), lenientConversion);
-	switch (cr) {
-		case conversionOK:
-			return result;
-		case sourceExhausted:
-			/* partial character in source, but hit end */
-			return "sourceExhausted";
-		case targetExhausted:
-			/* insuff. room in target for conversion */
-			return "targetExhausted";
-		case sourceIllegal:
-			return "sourceIllegal";
-	}
-	return "unknownError";
 }
 /* Дата и время компиляции */
 const QSP_CHAR *QSPGetCompiledDateTime()

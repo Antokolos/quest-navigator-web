@@ -17,7 +17,7 @@
 
 #include "../../declarations.h"
 
-#ifdef _DEFAULT_BINDING
+#ifdef _EMSCRIPTEN
 
 #include "../../callbacks.h"
 #include "../../actions.h"

@@ -17,9 +17,10 @@
 
 #include "../../declarations.h"
 
-#ifdef _DEFAULT_BINDING
+#ifdef _EMSCRIPTEN
 
 #include "../../text.h"
+#include "../../ConvertUTF.h"
 
 #ifdef _UNICODE
 	#define QSP_WCSTOMBSLEN(a) (int)wcstombs(0, a, 0)
@@ -35,6 +36,39 @@ char *qspToSysString(QSP_CHAR *s)
 	char *ret = (char *)malloc(len);
 	QSP_WCSTOMBS(ret, s, len);
 	return ret;
+}
+
+const UTF8 *QSPCharToUTF8(QSP_CHAR *source)
+{
+#ifdef _UNICODE
+	char *errormessage;
+	int len = qspStrLen(source) + 1;
+	UTF16 *src = (UTF16*) source;
+	UTF8 *tgt = malloc(len*sizeof(UTF8));
+	UTF8 *result = tgt;
+	ConversionResult cr = ConvertUTF16toUTF8(&src, &(src[len]), &tgt, &(tgt[len]), lenientConversion);
+	switch (cr) {
+		case conversionOK:
+			result[len - 1] = 0;
+			return result;
+		case sourceExhausted:
+			/* partial character in source, but hit end */
+			errormessage = malloc(100 * sizeof(char));
+			sprintf(errormessage, "QSPCharToUTF8 ERROR: sourceExhausted; len = %d", len);
+			return errormessage;
+		case targetExhausted:
+			/* insuff. room in target for conversion */
+			errormessage = malloc(100 * sizeof(char));
+			sprintf(errormessage, "QSPCharToUTF8 ERROR: targetExhausted; len = %d", len);
+			return errormessage;
+		case sourceIllegal:
+			return "QSPCharToUTF8 ERROR: sourceIllegal";
+	}
+	return "QSPCharToUTF8 ERROR: unknownError";
+#else
+	// TODO: examine non-unicode case
+	return (UTF8*) source;
+#endif
 }
 
 #endif

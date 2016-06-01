@@ -7,13 +7,12 @@ IDIR5 = qsp/onig/enc
 #IDIR6 = qsp/bindings/flash
 #IDIR7 = qsp/bindings/java
 CC = emcc
-CFLAGS = -I$(IDIR1) -I$(IDIR2) -I$(IDIR3) -I$(IDIR4) -fshort-wchar -D_UNICODE -DNOT_RUBY -DEXPORT
+CFLAGS = -I$(IDIR1) -I$(IDIR2) -I$(IDIR3) -I$(IDIR4) -fshort-wchar -D_UNICODE -DNOT_RUBY -DEXPORT -D_EMSCRIPTEN
 QCFLAGS = -O2 -s EXPORTED_FUNCTIONS="[\
 '_QSPIsInCallBack', \
 '_QSPEnableDebugMode', \
 '_QSPGetCurStateData', \
 '_QSPGetVersion', \
-'_QSPGetVersionW', \
 '_QSPGetCompiledDateTime', \
 '_QSPGetFullRefreshCount', \
 '_QSPGetQstFullPath', \
@@ -78,7 +77,7 @@ DEPS2 = $(patsubst %,$(IDIR2)/%,$(_DEPS2))
 _DEPS3 = bindings_config.h
 DEPS3 = $(patsubst %,$(IDIR3)/%,$(_DEPS3))
 
-_DEPS4 = qsp_emscripten.h
+_DEPS4 = emscripten.h
 DEPS4 = $(patsubst %,$(IDIR4)/%,$(_DEPS4))
 
 _OBJ1 = ConvertUTF.o actions.o codetools.o common.o game.o mathops.o menu.o playlist.o text.o towlower.o variables.o callbacks.o coding.o errors.o locations.o memwatch.o objects.o statements.o time.o towupper.o variant.o
