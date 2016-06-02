@@ -49,7 +49,7 @@ const UTF8 *QSPCharToUTF8(QSP_CHAR *source)
 	ConversionResult cr = ConvertUTF16toUTF8(&src, &(src[len]), &tgt, &(tgt[len]), lenientConversion);
 	switch (cr) {
 		case conversionOK:
-			result[len - 1] = 0;
+			*tgt = 0;
 			return result;
 		case sourceExhausted:
 			/* partial character in source, but hit end */
@@ -68,6 +68,27 @@ const UTF8 *QSPCharToUTF8(QSP_CHAR *source)
 #else
 	// TODO: examine non-unicode case
 	return (UTF8*) source;
+#endif
+}
+
+const QSP_CHAR *UTF8ToQSPChar(UTF8 *source)
+{
+#ifdef _UNICODE
+	// see http://stackoverflow.com/questions/16340760/utf-8-string-size-in-bytes
+	int len = strlen(source) + 1;
+	char *src = (char*) source;
+	QSP_CHAR *tgt = malloc(len*sizeof(QSP_CHAR));  // maybe actual needed length is less that this
+	QSP_CHAR *result = tgt;
+	ConversionResult cr = ConvertUTF8toUTF16(&src, &(src[len]), &tgt, &(tgt[len]), lenientConversion);
+	switch (cr) {
+		case conversionOK:
+			*tgt = 0;
+			return result;
+	}
+	return 0;
+#else
+	// TODO: examine non-unicode case
+	return (QSP_CHAR*) source;
 #endif
 }
 

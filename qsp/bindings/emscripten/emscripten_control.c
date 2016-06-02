@@ -49,7 +49,19 @@ void QSPEnableDebugMode(QSP_BOOL isDebug)
 	qspIsDebug = isDebug;
 }
 /* Получение данных текущего состояния */
-void QSPGetCurStateData(QSP_CHAR **loc, int *actIndex, int *line)
+QSPCurStateData QSPGetCurStateData()
+{
+	QSPCurStateData result;
+	QSP_CHAR* loc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	int actIndex;
+	int line;
+	QSPGetCurStateDataImpl(&loc, &actIndex, &line);
+	result.loc = QSPCharToUTF8(loc);
+	result.actIndex = actIndex;
+	result.line = line;
+	return result;
+}
+void QSPGetCurStateDataImpl(QSP_CHAR **loc, int *actIndex, int *line)
 {
 	*loc = (qspRealCurLoc >= 0 && qspRealCurLoc < qspLocsCount ? qspLocs[qspRealCurLoc].Name : 0);
 	*actIndex = qspRealActIndex;

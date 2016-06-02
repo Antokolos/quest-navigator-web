@@ -30,6 +30,14 @@
 	#else
 		typedef int (*QSP_CALLBACK)();
 	#endif
+	
+	#define MAX_LOC_NAME_LEN 4096
+	
+	typedef struct {
+		UTF8 *loc;
+		int actIndex;
+		int line;
+	} QSPCurStateData;
 
 	#ifdef __cplusplus
 	extern "C"
@@ -38,7 +46,7 @@
 
 	QSP_EXTERN QSP_BOOL QSPIsInCallBack();
 	QSP_EXTERN void QSPEnableDebugMode(QSP_BOOL isDebug);
-	QSP_EXTERN void QSPGetCurStateData(QSP_CHAR **loc, int *actIndex, int *line);
+	QSP_EXTERN QSPCurStateData QSPGetCurStateData();
 	QSP_EXTERN const UTF8 *QSPGetVersion();
 	QSP_EXTERN const QSP_CHAR *QSPGetCompiledDateTime();
 	QSP_EXTERN int QSPGetFullRefreshCount();
@@ -84,9 +92,7 @@
 	QSP_EXTERN void QSPInit();
 	QSP_EXTERN void QSPDeInit();
 
-	//QSP_EXTERN QSP_BOOL QSPIsInCallBackImpl();
-	//QSP_EXTERN void QSPEnableDebugModeImpl(QSP_BOOL isDebug);
-	//QSP_EXTERN void QSPGetCurStateDataImpl(QSP_CHAR **loc, int *actIndex, int *line);
+	QSP_EXTERN void QSPGetCurStateDataImpl(QSP_CHAR **loc, int *actIndex, int *line);
 	QSP_EXTERN const QSP_CHAR *QSPGetVersionImpl();
 	/*QSP_EXTERN const QSP_CHAR *QSPGetCompiledDateTimeImpl();
 	QSP_EXTERN int QSPGetFullRefreshCountImpl();
