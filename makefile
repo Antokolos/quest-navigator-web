@@ -11,15 +11,15 @@ CFLAGS = -I$(IDIR1) -I$(IDIR2) -I$(IDIR3) -I$(IDIR4) -fshort-wchar -D_UNICODE -D
 QCFLAGS = -O2 -s EXPORTED_FUNCTIONS="[\
 '_QSPIsInCallBack', \
 '_QSPEnableDebugMode', \
-'_QSPGetCurStateData', \
-'_QSPGetVersion', \
-'_QSPGetCompiledDateTime', \
+'_QSPGetCurStateDataW', \
+'_QSPGetVersionW', \
+'_QSPGetCompiledDateTimeW', \
 '_QSPGetFullRefreshCount', \
-'_QSPGetQstFullPath', \
-'_QSPGetCurLoc', \
-'_QSPGetMainDesc', \
+'_QSPGetQstFullPathW', \
+'_QSPGetCurLocW', \
+'_QSPGetMainDescW', \
 '_QSPIsMainDescChanged', \
-'_QSPGetVarsDesc', \
+'_QSPGetVarsDescW', \
 '_QSPIsVarsDescChanged', \
 '_QSPGetExprValue', \
 '_QSPSetInputStrText', \

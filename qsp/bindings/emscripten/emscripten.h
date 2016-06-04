@@ -46,15 +46,23 @@
 
 	QSP_EXTERN QSP_BOOL QSPIsInCallBack();
 	QSP_EXTERN void QSPEnableDebugMode(QSP_BOOL isDebug);
-	QSP_EXTERN QSPCurStateData QSPGetCurStateData();
-	QSP_EXTERN const UTF8 *QSPGetVersion();
+	QSP_EXTERN QSPCurStateData QSPGetCurStateDataW();
+	QSP_EXTERN void            QSPGetCurStateData(QSP_CHAR **loc, int *actIndex, int *line);
+	QSP_EXTERN const UTF8     *QSPGetVersionW();
+	QSP_EXTERN const QSP_CHAR *QSPGetVersion();
+	QSP_EXTERN const UTF8     *QSPGetCompiledDateTimeW();
 	QSP_EXTERN const QSP_CHAR *QSPGetCompiledDateTime();
 	QSP_EXTERN int QSPGetFullRefreshCount();
+	QSP_EXTERN const UTF8     *QSPGetQstFullPathW();
 	QSP_EXTERN const QSP_CHAR *QSPGetQstFullPath();
+	QSP_EXTERN const UTF8     *QSPGetCurLocW();
 	QSP_EXTERN const QSP_CHAR *QSPGetCurLoc();
+	QSP_EXTERN const UTF8     *QSPGetMainDescW();
 	QSP_EXTERN const QSP_CHAR *QSPGetMainDesc();
 	QSP_EXTERN QSP_BOOL QSPIsMainDescChanged();
+    QSP_EXTERN const UTF8 *QSPGetVarsDescW();
 	QSP_EXTERN const QSP_CHAR *QSPGetVarsDesc();
+
 	QSP_EXTERN QSP_BOOL QSPIsVarsDescChanged();
 	QSP_EXTERN QSP_BOOL QSPGetExprValue(const QSP_CHAR *str, QSP_BOOL *isString, int *numVal, QSP_CHAR *strVal, int strValBufSize);
 	QSP_EXTERN void QSPSetInputStrText(const QSP_CHAR *str);
@@ -92,15 +100,9 @@
 	QSP_EXTERN void QSPInit();
 	QSP_EXTERN void QSPDeInit();
 
-	QSP_EXTERN void QSPGetCurStateDataImpl(QSP_CHAR **loc, int *actIndex, int *line);
-	QSP_EXTERN const QSP_CHAR *QSPGetVersionImpl();
-	/*QSP_EXTERN const QSP_CHAR *QSPGetCompiledDateTimeImpl();
-	QSP_EXTERN int QSPGetFullRefreshCountImpl();
-	QSP_EXTERN const QSP_CHAR *QSPGetQstFullPathImpl();
-	QSP_EXTERN const QSP_CHAR *QSPGetCurLocImpl();
-	QSP_EXTERN const QSP_CHAR *QSPGetMainDescImpl();
+	
 	QSP_EXTERN QSP_BOOL QSPIsMainDescChangedImpl();
-	QSP_EXTERN const QSP_CHAR *QSPGetVarsDescImpl();
+	/*QSP_EXTERN const QSP_CHAR *QSPGetVarsDescImpl();
 	QSP_EXTERN QSP_BOOL QSPIsVarsDescChangedImpl();
 	QSP_EXTERN QSP_BOOL QSPGetExprValueImpl(const QSP_CHAR *str, QSP_BOOL *isString, int *numVal, QSP_CHAR *strVal, int strValBufSize);
 	QSP_EXTERN void QSPSetInputStrTextImpl(const QSP_CHAR *str);

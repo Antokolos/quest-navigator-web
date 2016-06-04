@@ -49,19 +49,19 @@ void QSPEnableDebugMode(QSP_BOOL isDebug)
 	qspIsDebug = isDebug;
 }
 /* Получение данных текущего состояния */
-QSPCurStateData QSPGetCurStateData()
+QSPCurStateData QSPGetCurStateDataW()
 {
 	QSPCurStateData result;
 	QSP_CHAR* loc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
 	int actIndex;
 	int line;
-	QSPGetCurStateDataImpl(&loc, &actIndex, &line);
+	QSPGetCurStateData(&loc, &actIndex, &line);
 	result.loc = QSPCharToUTF8(loc);
 	result.actIndex = actIndex;
 	result.line = line;
 	return result;
 }
-void QSPGetCurStateDataImpl(QSP_CHAR **loc, int *actIndex, int *line)
+void QSPGetCurStateData(QSP_CHAR **loc, int *actIndex, int *line)
 {
 	*loc = (qspRealCurLoc >= 0 && qspRealCurLoc < qspLocsCount ? qspLocs[qspRealCurLoc].Name : 0);
 	*actIndex = qspRealActIndex;
@@ -72,15 +72,19 @@ void QSPGetCurStateDataImpl(QSP_CHAR **loc, int *actIndex, int *line)
 
 /* Версия */
 
-const UTF8 *QSPGetVersion()
+const UTF8 *QSPGetVersionW()
 {
-	return QSPCharToUTF8(QSPGetVersionImpl());
+	return QSPCharToUTF8(QSPGetVersion());
 }
-const QSP_CHAR *QSPGetVersionImpl()
+const QSP_CHAR *QSPGetVersion()
 {
 	return QSP_VER;
 }
 /* Дата и время компиляции */
+const UTF8 *QSPGetCompiledDateTimeW()
+{
+	return QSPCharToUTF8(QSPGetCompiledDateTime());
+}
 const QSP_CHAR *QSPGetCompiledDateTime()
 {
 	return QSP_FMT(__DATE__) QSP_FMT(", ") QSP_FMT(__TIME__);
@@ -93,12 +97,20 @@ int QSPGetFullRefreshCount()
 }
 /* ------------------------------------------------------------ */
 /* Полный путь к загруженному файлу игры */
+const UTF8 *QSPGetQstFullPathW()
+{
+	return QSPCharToUTF8(QSPGetQstFullPath());
+}
 const QSP_CHAR *QSPGetQstFullPath()
 {
 	return qspQstFullPath;
 }
 /* ------------------------------------------------------------ */
 /* Название текущей локации */
+const UTF8 *QSPGetCurLocW()
+{
+	return QSPCharToUTF8(QSPGetCurLoc());
+}
 const QSP_CHAR *QSPGetCurLoc()
 {
 	return (qspCurLoc >= 0 ? qspLocs[qspCurLoc].Name : 0);
@@ -107,6 +119,10 @@ const QSP_CHAR *QSPGetCurLoc()
 /* Основное описание локации */
 
 /* Текст основного окна описания локации */
+const UTF8 *QSPGetMainDescW()
+{
+	return QSPCharToUTF8(QSPGetMainDesc());
+}
 const QSP_CHAR *QSPGetMainDesc()
 {
 	return qspCurDesc;
@@ -120,6 +136,10 @@ QSP_BOOL QSPIsMainDescChanged()
 /* Дополнительное описание локации */
 
 /* Текст дополнительного окна описания локации */
+const UTF8 *QSPGetVarsDescW()
+{
+	return QSPCharToUTF8(QSPGetVarsDesc());
+}
 const QSP_CHAR *QSPGetVarsDesc()
 {
 	return qspCurVars;

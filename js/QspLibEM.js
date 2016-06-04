@@ -27,7 +27,7 @@ var QspLib = {
     },
     
     version: function(types, success, fail) {
-        return Module.cwrap('QSPGetVersion', 'string', [])();
+        return Module.cwrap('QSPGetVersionW', 'string', [])();
       //return cordova.exec(success, fail, "QspLib", "version", types);
     },
     
