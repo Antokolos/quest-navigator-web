@@ -39,6 +39,13 @@
 		int line;
 	} QSPCurStateData;
 
+	typedef struct {
+		QSP_BOOL status;
+		QSP_BOOL isString;
+		UTF8 *strVal;
+		int numVal;
+	} QSPExprValue;
+
 	#ifdef __cplusplus
 	extern "C"
 	{
@@ -60,11 +67,12 @@
 	QSP_EXTERN const UTF8     *QSPGetMainDescW();
 	QSP_EXTERN const QSP_CHAR *QSPGetMainDesc();
 	QSP_EXTERN QSP_BOOL QSPIsMainDescChanged();
-    QSP_EXTERN const UTF8 *QSPGetVarsDescW();
+	QSP_EXTERN const UTF8 *QSPGetVarsDescW();
 	QSP_EXTERN const QSP_CHAR *QSPGetVarsDesc();
-
 	QSP_EXTERN QSP_BOOL QSPIsVarsDescChanged();
-	QSP_EXTERN QSP_BOOL QSPGetExprValue(const QSP_CHAR *str, QSP_BOOL *isString, int *numVal, QSP_CHAR *strVal, int strValBufSize);
+	QSP_EXTERN QSPExprValue QSPGetExprValueW(const UTF8 *expr, int strValBufSize);
+	QSP_EXTERN QSP_BOOL QSPGetExprValue(const QSP_CHAR *expr, QSP_BOOL *isString, int *numVal, QSP_CHAR *strVal, int strValBufSize);
+
 	QSP_EXTERN void QSPSetInputStrText(const QSP_CHAR *str);
 	QSP_EXTERN int QSPGetActionsCount();
 	QSP_EXTERN void QSPGetActionData(int ind, QSP_CHAR **imgPath, QSP_CHAR **desc);
@@ -142,6 +150,7 @@
 	
 	/* Utils */
 	QSP_EXTERN const UTF8 *QSPCharToUTF8(QSP_CHAR *source);
+	QSP_EXTERN const QSP_CHAR *UTF8ToQSPChar(UTF8 *source);
 	#ifdef __cplusplus
 	}
 	#endif

@@ -151,6 +151,16 @@ QSP_BOOL QSPIsVarsDescChanged()
 }
 /* ------------------------------------------------------------ */
 /* ѕолучить значение указанного выражени€ */
+QSPExprValue QSPGetExprValueW(const UTF8 *expr, int strValBufSize)
+{
+	QSPExprValue result;
+	QSP_CHAR* strVal = malloc(strValBufSize * sizeof(QSP_CHAR));
+	QSP_BOOL status = QSPGetExprValue(UTF8ToQSPChar(expr), &(result.isString), &(result.numVal), strVal, strValBufSize);
+	result.status = status;
+	result.strVal = QSPCharToUTF8(strVal);
+	return result;
+}
+
 QSP_BOOL QSPGetExprValue(const QSP_CHAR *expr, QSP_BOOL *isString, int *numVal, QSP_CHAR *strVal, int strValBufSize)
 {
 	QSPVariant v;
