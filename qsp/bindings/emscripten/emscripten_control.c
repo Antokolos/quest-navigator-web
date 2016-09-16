@@ -182,6 +182,11 @@ QSP_BOOL QSPGetExprValue(const QSP_CHAR *expr, QSP_BOOL *isString, int *numVal, 
 }
 /* ------------------------------------------------------------ */
 /* Текст строки ввода */
+void QSPSetInputStrTextW(const UTF8 *val)
+{
+	QSPSetInputStrText(UTF8ToQSPChar(val));
+}
+
 void QSPSetInputStrText(const QSP_CHAR *val)
 {
 	qspCurInputLen = qspAddText(&qspCurInput, (QSP_CHAR *)val, 0, -1, QSP_FALSE);
@@ -195,6 +200,17 @@ int QSPGetActionsCount()
 	return qspCurActionsCount;
 }
 /* Данные действия с указанным индексом */
+QSPActionData QSPGetActionDataW(int ind)
+{
+	QSPActionData result;
+	QSP_CHAR* image = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* desc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSPGetActionData(ind, &image, &desc);
+	result.imgPath = QSPCharToUTF8(image);
+	result.desc = QSPCharToUTF8(desc);
+	return result;
+}
+
 void QSPGetActionData(int ind, QSP_CHAR **image, QSP_CHAR **desc)
 {
 	if (ind >= 0 && ind < qspCurActionsCount)
@@ -253,6 +269,17 @@ int QSPGetObjectsCount()
 	return qspCurObjectsCount;
 }
 /* Данные объекта с указанным индексом */
+QSPObjectData QSPGetObjectDataW(int ind)
+{
+	QSPObjectData result;
+	QSP_CHAR* image = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* desc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSPGetObjectData(ind, &image, &desc);
+	result.imgPath = QSPCharToUTF8(image);
+	result.desc = QSPCharToUTF8(desc);
+	return result;
+}
+
 void QSPGetObjectData(int ind, QSP_CHAR **image, QSP_CHAR **desc)
 {
 	if (ind >= 0 && ind < qspCurObjectsCount)
@@ -312,6 +339,14 @@ void QSPShowWindow(int type, QSP_BOOL isShow)
 /* Переменные */
 
 /* Получить количество элементов массива */
+QSPVarValuesCountData QSPGetVarValuesCountW(const UTF8 *name)
+{
+	QSPVarValuesCountData result;
+	QSP_BOOL status = QSPGetVarValuesCount(UTF8ToQSPChar(name), &(result.count));
+	result.status = status;
+	return result;
+}
+
 QSP_BOOL QSPGetVarValuesCount(const QSP_CHAR *name, int *count)
 {
 	QSPVar *var;
@@ -323,6 +358,16 @@ QSP_BOOL QSPGetVarValuesCount(const QSP_CHAR *name, int *count)
 	return QSP_TRUE;
 }
 /* Получить значения указанного элемента массива */
+QSPVarValuesData QSPGetVarValuesW(const UTF8 *name, int ind)
+{
+	QSPVarValuesData result;
+	QSP_CHAR* strVal = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_BOOL status = QSPGetVarValues(UTF8ToQSPChar(name), ind, &(result.numVal), &strVal);
+	result.status = status;
+	result.strVal = QSPCharToUTF8(strVal);
+	return result;
+}
+
 QSP_BOOL QSPGetVarValues(const QSP_CHAR *name, int ind, int *numVal, QSP_CHAR **strVal)
 {
 	QSPVar *var;
@@ -340,6 +385,16 @@ int QSPGetMaxVarsCount()
 	return QSP_VARSCOUNT;
 }
 /* Получить имя переменной с указанным индексом */
+QSPVarNameData QSPGetVarNameByIndexW(int index)
+{
+	QSPVarNameData result;
+	QSP_CHAR* name = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_BOOL status = QSPGetVarNameByIndex(index, &name);
+	result.status = status;
+	result.name = QSPCharToUTF8(name);
+	return result;
+}
+
 QSP_BOOL QSPGetVarNameByIndex(int index, QSP_CHAR **name)
 {
 	if (index < 0 || index >= QSP_VARSCOUNT || !qspVars[index].Name) return QSP_FALSE;
