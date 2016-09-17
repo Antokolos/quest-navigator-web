@@ -52,7 +52,7 @@ void QSPEnableDebugMode(QSP_BOOL isDebug)
 QSPCurStateData QSPGetCurStateDataW()
 {
 	QSPCurStateData result;
-	QSP_CHAR* loc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* loc;
 	int actIndex;
 	int line;
 	QSPGetCurStateData(&loc, &actIndex, &line);
@@ -203,8 +203,8 @@ int QSPGetActionsCount()
 QSPActionData QSPGetActionDataW(int ind)
 {
 	QSPActionData result;
-	QSP_CHAR* image = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
-	QSP_CHAR* desc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* image;
+	QSP_CHAR* desc;
 	QSPGetActionData(ind, &image, &desc);
 	result.imgPath = QSPCharToUTF8(image);
 	result.desc = QSPCharToUTF8(desc);
@@ -272,8 +272,8 @@ int QSPGetObjectsCount()
 QSPObjectData QSPGetObjectDataW(int ind)
 {
 	QSPObjectData result;
-	QSP_CHAR* image = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
-	QSP_CHAR* desc = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* image;
+	QSP_CHAR* desc;
 	QSPGetObjectData(ind, &image, &desc);
 	result.imgPath = QSPCharToUTF8(image);
 	result.desc = QSPCharToUTF8(desc);
@@ -361,7 +361,7 @@ QSP_BOOL QSPGetVarValuesCount(const QSP_CHAR *name, int *count)
 QSPVarValuesData QSPGetVarValuesW(const UTF8 *name, int ind)
 {
 	QSPVarValuesData result;
-	QSP_CHAR* strVal = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* strVal;
 	QSP_BOOL status = QSPGetVarValues(UTF8ToQSPChar(name), ind, &(result.numVal), &strVal);
 	result.status = status;
 	result.strVal = QSPCharToUTF8(strVal);
@@ -388,7 +388,7 @@ int QSPGetMaxVarsCount()
 QSPVarNameData QSPGetVarNameByIndexW(int index)
 {
 	QSPVarNameData result;
-	QSP_CHAR* name = malloc(MAX_LOC_NAME_LEN * sizeof(QSP_CHAR));
+	QSP_CHAR* name;
 	QSP_BOOL status = QSPGetVarNameByIndex(index, &name);
 	result.status = status;
 	result.name = QSPCharToUTF8(name);
@@ -405,6 +405,11 @@ QSP_BOOL QSPGetVarNameByIndex(int index, QSP_CHAR **name)
 /* Выполнение кода */
 
 /* Выполнение строки кода */
+QSP_BOOL QSPExecStringW(const UTF8 *s, QSP_BOOL isRefresh)
+{
+	return QSPExecString(UTF8ToQSPChar(s), isRefresh);
+}
+
 QSP_BOOL QSPExecString(const QSP_CHAR *s, QSP_BOOL isRefresh)
 {
 	if (qspIsExitOnError && qspErrorNum) return QSP_FALSE;
@@ -416,6 +421,11 @@ QSP_BOOL QSPExecString(const QSP_CHAR *s, QSP_BOOL isRefresh)
 	return QSP_TRUE;
 }
 /* Выполнение кода указанной локации */
+QSP_BOOL QSPExecLocationCodeW(const UTF8 *name, QSP_BOOL isRefresh)
+{
+	return QSPExecLocationCode(UTF8ToQSPChar(name), isRefresh);
+}
+
 QSP_BOOL QSPExecLocationCode(const QSP_CHAR *name, QSP_BOOL isRefresh)
 {
 	if (qspIsExitOnError && qspErrorNum) return QSP_FALSE;
@@ -453,6 +463,15 @@ QSP_BOOL QSPExecUserInput(QSP_BOOL isRefresh)
 /* Ошибки */
 
 /* Получить информацию о последней ошибке */
+QSPLastErrorData QSPGetLastErrorDataW()
+{
+	QSPLastErrorData result;
+	QSP_CHAR* errorLoc;
+	QSPGetLastErrorData(&(result.errorNum), &errorLoc, &(result.errorActIndex), &(result.errorLine));
+	result.errorLoc = QSPCharToUTF8(errorLoc);
+	return result;
+}
+
 void QSPGetLastErrorData(int *errorNum, QSP_CHAR **errorLoc, int *errorActIndex, int *errorLine)
 {
 	*errorNum = qspErrorNum;

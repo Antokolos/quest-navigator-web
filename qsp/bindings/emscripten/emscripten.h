@@ -71,6 +71,13 @@
 		UTF8 *strVal;
 		int numVal;
 	} QSPExprValue;
+	
+	typedef struct {
+		int errorNum;
+		UTF8 *errorLoc;
+		int errorActIndex;
+		int errorLine;
+	} QSPLastErrorData;
 
 	#ifdef __cplusplus
 	extern "C"
@@ -121,12 +128,15 @@
 	QSP_EXTERN int QSPGetMaxVarsCount();
 	QSP_EXTERN QSPVarNameData QSPGetVarNameByIndexW(int ind);
 	QSP_EXTERN QSP_BOOL QSPGetVarNameByIndex(int ind, QSP_CHAR **name);
-	
+	QSP_EXTERN QSP_BOOL QSPExecStringW(const UTF8 *str, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPExecString(const QSP_CHAR *str, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPExecCounter(QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPExecUserInput(QSP_BOOL isRefresh);
+	QSP_EXTERN QSP_BOOL QSPExecLocationCodeW(const UTF8 *name, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPExecLocationCode(const QSP_CHAR *name, QSP_BOOL isRefresh);
+	QSP_EXTERN QSPLastErrorData QSPGetLastErrorDataW();
 	QSP_EXTERN void QSPGetLastErrorData(int *errorNum, QSP_CHAR **errorLoc, int *errorActIndex, int *errorLine);
+	
 	QSP_EXTERN const QSP_CHAR *QSPGetErrorDesc(int errorNum);
 	QSP_EXTERN QSP_BOOL QSPLoadGameWorld(const QSP_CHAR *file);
 	QSP_EXTERN QSP_BOOL QSPLoadGameWorldFromData(const void *data, int dataSize, const QSP_CHAR *file);
