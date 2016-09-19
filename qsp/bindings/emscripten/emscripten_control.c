@@ -480,6 +480,11 @@ void QSPGetLastErrorData(int *errorNum, QSP_CHAR **errorLoc, int *errorActIndex,
 	*errorLine = qspErrorLine;
 }
 /* Получить описание ошибки по ее номеру */
+const UTF8 *QSPGetErrorDescW(int errorNum)
+{
+	return QSPCharToUTF8(QSPGetErrorDesc(errorNum));
+}
+
 const QSP_CHAR *QSPGetErrorDesc(int errorNum)
 {
 	return qspGetErrorDesc(errorNum);
@@ -488,6 +493,11 @@ const QSP_CHAR *QSPGetErrorDesc(int errorNum)
 /* Управление игрой */
 
 /* Загрузка новой игры из файла */
+QSP_BOOL QSPLoadGameWorldW(const UTF8 *fileName)
+{
+	return QSPLoadGameWorld(UTF8ToQSPChar(fileName));
+}
+
 QSP_BOOL QSPLoadGameWorld(const QSP_CHAR *fileName)
 {
 	if (qspIsExitOnError && qspErrorNum) return QSP_FALSE;
@@ -498,6 +508,11 @@ QSP_BOOL QSPLoadGameWorld(const QSP_CHAR *fileName)
 	return QSP_TRUE;
 }
 /* Загрузка новой игры из памяти */
+QSP_BOOL QSPLoadGameWorldFromDataW(const void *data, int dataSize, const UTF8 *fileName)
+{
+	return QSPLoadGameWorldFromData(data, dataSize, UTF8ToQSPChar(fileName));
+}
+
 QSP_BOOL QSPLoadGameWorldFromData(const void *data, int dataSize, const QSP_CHAR *fileName)
 {
 	char *ptr;
@@ -513,6 +528,11 @@ QSP_BOOL QSPLoadGameWorldFromData(const void *data, int dataSize, const QSP_CHAR
 	return QSP_TRUE;
 }
 /* Сохранение состояния в файл */
+QSP_BOOL QSPSaveGameW(const UTF8 *fileName, QSP_BOOL isRefresh)
+{
+	return QSPSaveGame(UTF8ToQSPChar(fileName), isRefresh);
+}
+
 QSP_BOOL QSPSaveGame(const QSP_CHAR *fileName, QSP_BOOL isRefresh)
 {
 	if (qspIsExitOnError && qspErrorNum) return QSP_FALSE;
@@ -524,6 +544,32 @@ QSP_BOOL QSPSaveGame(const QSP_CHAR *fileName, QSP_BOOL isRefresh)
 	return QSP_TRUE;
 }
 /* Сохранение состояния в память */
+QSPSaveGameData QSPGetFailedSaveData()
+{	
+	QSPSaveGameData result;
+	result.status = QSP_FALSE;
+	result.data = 0;
+	return result;
+}
+
+QSPSaveGameData QSPSaveGameAsDataW(QSP_BOOL isRefresh)
+{
+	QSPSaveGameData result;
+	int len;
+	QSP_CHAR *data;
+	if (qspIsExitOnError && qspErrorNum) return QSPGetFailedSaveData();
+	qspPrepareExecution();
+	if (qspIsDisableCodeExec) return QSPGetFailedSaveData();
+	if (!(len = qspSaveGameStatusToString(&data)))
+	{
+		return QSPGetFailedSaveData();
+	}
+	result.data = QSPCharToUTF8(data);
+	free(data);
+	if (isRefresh) qspCallRefreshInt(QSP_FALSE);
+	return result;
+}
+
 QSP_BOOL QSPSaveGameAsData(void *buf, int bufSize, int *realSize, QSP_BOOL isRefresh)
 {
 	int len, size;
@@ -549,6 +595,11 @@ QSP_BOOL QSPSaveGameAsData(void *buf, int bufSize, int *realSize, QSP_BOOL isRef
 	return QSP_TRUE;
 }
 /* Загрузка состояния из файла */
+QSP_BOOL QSPOpenSavedGameW(const UTF8 *fileName, QSP_BOOL isRefresh)
+{
+	QSPOpenSavedGame(UTF8ToQSPChar(fileName), isRefresh);
+}
+
 QSP_BOOL QSPOpenSavedGame(const QSP_CHAR *fileName, QSP_BOOL isRefresh)
 {
 	if (qspIsExitOnError && qspErrorNum) return QSP_FALSE;
@@ -560,6 +611,20 @@ QSP_BOOL QSPOpenSavedGame(const QSP_CHAR *fileName, QSP_BOOL isRefresh)
 	return QSP_TRUE;
 }
 /* Загрузка состояния из памяти */
+QSP_BOOL QSPOpenSavedGameFromDataW(const UTF8 *data, QSP_BOOL isRefresh)
+{
+	QSP_CHAR *ptr;
+	if (qspIsExitOnError && qspErrorNum) return QSP_FALSE;
+	qspPrepareExecution();
+	if (qspIsDisableCodeExec) return QSP_FALSE;
+	ptr = UTF8ToQSPChar(data);
+	qspOpenGameStatusFromString(ptr);
+	free(ptr);
+	if (qspErrorNum) return QSP_FALSE;
+	if (isRefresh) qspCallRefreshInt(QSP_FALSE);
+	return QSP_TRUE;
+}
+
 QSP_BOOL QSPOpenSavedGameFromData(const void *data, int dataSize, QSP_BOOL isRefresh)
 {
 	int dataLen;

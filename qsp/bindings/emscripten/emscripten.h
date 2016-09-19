@@ -79,6 +79,11 @@
 		int errorLine;
 	} QSPLastErrorData;
 
+	typedef struct {
+		QSP_BOOL status;
+		UTF8 *data;
+	} QSPSaveGameData;
+
 	#ifdef __cplusplus
 	extern "C"
 	{
@@ -136,13 +141,19 @@
 	QSP_EXTERN QSP_BOOL QSPExecLocationCode(const QSP_CHAR *name, QSP_BOOL isRefresh);
 	QSP_EXTERN QSPLastErrorData QSPGetLastErrorDataW();
 	QSP_EXTERN void QSPGetLastErrorData(int *errorNum, QSP_CHAR **errorLoc, int *errorActIndex, int *errorLine);
-	
+	QSP_EXTERN const UTF8 *QSPGetErrorDescW(int errorNum);
 	QSP_EXTERN const QSP_CHAR *QSPGetErrorDesc(int errorNum);
+	QSP_EXTERN QSP_BOOL QSPLoadGameWorldW(const UTF8 *file);
 	QSP_EXTERN QSP_BOOL QSPLoadGameWorld(const QSP_CHAR *file);
+	QSP_EXTERN QSP_BOOL QSPLoadGameWorldFromDataW(const void *data, int dataSize, const UTF8 *file);
 	QSP_EXTERN QSP_BOOL QSPLoadGameWorldFromData(const void *data, int dataSize, const QSP_CHAR *file);
+	QSP_EXTERN QSP_BOOL QSPSaveGameW(const UTF8 *file, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPSaveGame(const QSP_CHAR *file, QSP_BOOL isRefresh);
+	QSP_EXTERN QSPSaveGameData QSPSaveGameAsDataW(QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPSaveGameAsData(void *buf, int bufSize, int *realSize, QSP_BOOL isRefresh);
+        QSP_EXTERN QSP_BOOL QSPOpenSavedGameW(const UTF8 *file, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPOpenSavedGame(const QSP_CHAR *file, QSP_BOOL isRefresh);
+	QSP_EXTERN QSP_BOOL QSPOpenSavedGameFromDataW(const UTF8 *data, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPOpenSavedGameFromData(const void *data, int dataSize, QSP_BOOL isRefresh);
 	QSP_EXTERN QSP_BOOL QSPRestartGame(QSP_BOOL isRefresh);
 	QSP_EXTERN void QSPSelectMenuItem(int ind);
